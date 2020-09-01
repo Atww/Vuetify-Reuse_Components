@@ -3,16 +3,19 @@ TableExample.vue
 
 วิธีเรียกใช้
 ```
-<table-example
+<template>
+  <div>
+    <div style="margin:20px">
+      <table-example
         :header="table.headerTable"
         :datasource="table.dataSource"
+        :is-action="table.isAction"
         :is-loading="table.isLoading"
         :is-insert-more="table.isInsert"
         :insert-action="insertItem"
-        name-table="ตารางทดสอบ Json Placeholder"
         is-loading-txt="ทดสอบโหลด"
+        name-table="ตารางทดสอบ Json Placeholder"
       >
-      ส่วนนี้ใช้เพื่อการทำ Slot Custom Column 
         <template v-slot:item.userId="{ item }">
           <v-chip>
             {{ item.userId }}
@@ -37,4 +40,70 @@ TableExample.vue
           </v-icon>
         </template>
       </table-example>
+    </div>
+  </div>
+</template>
+
+<script>
+  import TableExample from '@/components/table/TableExample.vue'
+
+  export default {
+    components: {
+      TableExample,
+    },
+    data () {
+      return {
+        table: {
+          dataSource: [],
+          headerTable: [
+            {
+              text: 'ID',
+              align: 'start',
+              sortable: false,
+              value: 'id',
+            },
+            { text: 'Title', value: 'title' },
+            { text: 'Body', value: 'body' },
+            { text: 'UserID', value: 'userId' },
+            { text: 'จัดการ', value: 'actions', sortable: false, width: '14%', align: 'center', class: 'caption' },
+
+          ],
+          isAction: true,
+          isLoading: true,
+          isInsert: true,
+        },
+
+      }
+    },
+    mounted () {
+      fetch('https://jsonplaceholder.typicode.com/posts')
+        .then((response) => response.json())
+        .then((json) => {
+          setTimeout(() => {
+            this.table.dataSource = json
+            this.table.isLoading = false
+            console.log(json)
+          }, 500)
+        })
+    },
+    methods: {
+      deleteItem (item) {
+        console.log(item.id)
+      },
+      editItem (item) {
+        console.log('update')
+
+        console.log(item)
+      },
+      insertItem (item) {
+        console.log('insert')
+      },
+    },
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>
+
       ```
