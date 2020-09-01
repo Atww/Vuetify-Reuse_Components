@@ -1,4 +1,7 @@
 TableExample.vue
+
+
+วิธีเรียกใช้
 ```
 <table-example
         :header="table.headerTable"
