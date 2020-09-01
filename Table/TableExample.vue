@@ -61,12 +61,6 @@
           return []
         },
       },
-      isAction: {
-        type: Boolean,
-        default: function () {
-          return false
-        },
-      },
       isLoading: {
         type: Boolean,
         default: function () {
